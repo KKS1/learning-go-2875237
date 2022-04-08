@@ -5,5 +5,6 @@ import (
 )
 
 func main() {
-	fmt.Println("Arrays")
+	arr1 := [2]int{1, 2}
+	fmt.Println(arr1)
 }
