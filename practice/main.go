@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
+	"sort"
 )
 
 func main() {
@@ -18,10 +20,14 @@ func main() {
 	numbers := make([]int, 5)
 
 	for i := 0; i < 5; i++ {
-		numbers[i] = 134 + i
+		numbers[i] = rand.Intn(100)
 	}
 
-	numbers = append(numbers, 140)
+	numbers = append(numbers, 40)
+
+	fmt.Println(numbers)
+
+	sort.Ints(numbers)
 
 	fmt.Println(numbers)
 }
