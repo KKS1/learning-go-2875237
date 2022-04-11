@@ -9,27 +9,72 @@ import (
 	"strings"
 )
 
+var reader = bufio.NewReader(os.Stdin)
+
 func main() {
-	reader := bufio.NewReader(os.Stdin)
+	input1 := readInput("Value 1: ")
+	float1 := convToFloat64(input1)
 
-	fmt.Print("Value 1: ")
-	input1, _ := reader.ReadString('\n')
-	float1, err := strconv.ParseFloat(strings.TrimSpace(input1), 64)
-	if err != nil {
-		fmt.Println(err)
-		panic("Value 1 must be a number")
-	}
+	input2 := readInput("Value 2: ")
+	float2 := convToFloat64(input2)
 
-	fmt.Print("Value 2: ")
-	input2, _ := reader.ReadString('\n')
-	float2, err := strconv.ParseFloat(strings.TrimSpace(input2), 64)
-	if err != nil {
-		fmt.Println(err)
-		panic("Value 2 must be a number")
-	}
+	operator := readInput("Select an operation (+ - / *): ")
 
-	sum := float1 + float2
-	sum = math.Round(sum*100) / 100
-	fmt.Printf("The sum of %v and %v is %v\n\n", float1, float2, sum)
+	calcVal := performCalc(float1, float2, operator)
 
+	fmt.Printf("The result is %v\n\n", calcVal)
 }
+
+func readInput(prompt string) string {
+	fmt.Print(prompt)
+	input, _ := reader.ReadString('\n')
+	input = strings.TrimSpace(input)
+	return input
+}
+
+func convToFloat64(input string) float64 {
+	floatVal, err := strconv.ParseFloat(input, 64)
+	if err != nil {
+		fmt.Println(err)
+		panic("Value must be a number")
+	}
+	return floatVal
+}
+
+func performCalc(num1, num2 float64, operator string) float64 {
+	// matchOperator(operator)
+
+	var retVal float64
+
+	switch operator {
+	case "+":
+		retVal = num1 + num2
+	case "-":
+		retVal = num1 - num2
+	case "/":
+		retVal = num1 / num2
+	case "*":
+		retVal = num1 * num2
+	default:
+		panic("Invalid operation")
+	}
+
+	return math.Round(retVal*100) / 100
+}
+
+// func matchOperator(operator string) {
+// 	allowedOperators := []string{"+", "-", "/", "*"}
+
+// 	if !contains(allowedOperators, operator) {
+// 		panic("Operator does not match + - / *")
+// 	}
+// }
+
+// func contains(s []string, str string) bool {
+// 	for _, v := range s {
+// 		if str == v {
+// 			return true
+// 		}
+// 	}
+// 	return false
+// }
